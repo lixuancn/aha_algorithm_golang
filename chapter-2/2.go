@@ -25,10 +25,6 @@ func main(){
 	}
 	for i:=mid; i<strlen; i++{
 		if string(str[i]) != stackList[top]{
-			fmt.Println(i)
-			fmt.Println(top)
-			fmt.Println(string(str[i]))
-			fmt.Println(stackList[top])
 			fmt.Println(str + "不是回文字符串")
 			return
 		}
