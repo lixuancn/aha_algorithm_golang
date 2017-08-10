@@ -16,7 +16,6 @@ func main(){
 	if count <= 0{
 		return
 	}
-	//初始化桶
 	sourceList := make([]int, count)
 	var source int
 	for i:=0; i<count; i++{
@@ -24,7 +23,6 @@ func main(){
 		fmt.Scanf("%d", &source)
 		sourceList[i] = source
 	}
-	fmt.Println(len(sourceList))
 	//冒泡
 	for i:=0; i<count-1; i++{
 		for j:=0; j<count-1-i;j++{
@@ -35,7 +33,6 @@ func main(){
 			}
 		}
 	}
-	fmt.Println(len(sourceList))
 	//从大到小输出
 	fmt.Print("分数从小到大排序为：")
 	for _, source := range sourceList{
