@@ -10,7 +10,7 @@ import (
 
 //桌面上的牌, 是一个栈
 type DesktopList struct{
-	data [100]int
+	data [100000]int
 	top int
 }
 
@@ -19,17 +19,17 @@ type HandList struct{
 	name string
 	head int
 	tail int
-	data [100]int
+	data [100000]int
 }
 
 func main(){
 	//初始化
 	aHandList := HandList{name:"A",head:0, tail:5}
-	for k, v := range [6]int{2,4,1,2,5,6}{
+	for k, v := range [6]int{1,1}{
 		aHandList.data[k] = v
 	}
 	bHandList := HandList{name:"B", head:0, tail:5}
-	for k, v := range [6]int{3,1,3,5,6,4}{
+	for k, v := range [6]int{5}{
 		bHandList.data[k] = v
 	}
 	//初始化 桌面没牌
