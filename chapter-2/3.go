@@ -34,6 +34,7 @@ func main(){
 	}
 	//初始化 桌面没牌
 	desktopList := DesktopList{top:0}
+
 	desktopList.data[desktopList.top] = 99
 	desktopList.top++
 	desktopList.data[desktopList.top] = 2
@@ -43,17 +44,19 @@ func main(){
 	desktopList.data[desktopList.top] = 11
 	desktopList.top++
 	desktopList.data[desktopList.top] = 12
+	desktopList.top++
+
 	//游戏开始， A先出牌
-	startUser := aHandList
+	startUser := &aHandList
 	for aHandList.head < aHandList.tail && bHandList.head < bHandList.tail{
 		current := startUser.data[startUser.head]
 		startUser.head++
 		//把牌放到桌上
-		desktopList.top++
 		desktopList.data[desktopList.top] = current
+		desktopList.top++
 		//判断是否可以吃牌了
 		flag := 0
-		for i:=0; i<desktopList.top-1; i++{
+		for i:=0; i<desktopList.top; i++{
 			if current == desktopList.data[i]{
 				flag = i
 				break
@@ -61,7 +64,7 @@ func main(){
 		}
 		//吃牌
 		if flag != 0{
-			for i:=desktopList.top; i>=flag; i--{
+			for i:=desktopList.top-1; i>=flag; i--{
 				//牌入手
 				startUser.tail++
 				startUser.data[startUser.tail] = desktopList.data[i]
@@ -71,9 +74,9 @@ func main(){
 		}else{
 			//换人出牌
 			if startUser.name == "A"{
-				startUser = bHandList
+				startUser = &bHandList
 			}else{
-				startUser = aHandList
+				startUser = &aHandList
 			}
 		}
 	}
