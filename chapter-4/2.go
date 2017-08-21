@@ -10,7 +10,6 @@ var startY = 1
 var endX = 4
 var endY = 3
 //已经走过的路
-var b = make(map[int]int)
 var book = make(map[int]map[int]int)
 
 //地图，#是障碍物，.是空地
@@ -34,6 +33,7 @@ var nextList = [4][2]int{
 }
 
 func main(){
+	b := make(map[int]int)
 	b[startY] = 1
 	book[startX] = b
 	dfs(startX, startY, 0)
@@ -41,10 +41,8 @@ func main(){
 }
 
 func dfs(x, y, step int){
-	if y ==3 {
-		fmt.Println(x, "---", y)
-	}
 	if x == endX && y == endY{
+		fmt.Println("到地方了")
 		if step < min{
 			min = step
 		}
@@ -55,19 +53,28 @@ func dfs(x, y, step int){
 		nowY := y + next[1]
 		//超出边界计算
 		if nowX < 1 || nowY < 1 || nowX > maxX || nowY > maxY{
+			fmt.Println("超出边界:", nowX, ",", nowY)
 			continue
 		}
 		//已经在路径中了
-		if book[nowX][nowY] != 0{
-			continue
-		}
 		//障碍物
 		//x,y是从1开始的，gameMap是从0开始的
-		if gameMap[nowX-1][nowY-1] != '.'{
+		if book[nowX][nowY] != 0{
+			fmt.Println("走过了:", nowX, ",", nowY)
 			continue
 		}
-		b[nowY] = 1
-		book[nowX] = b
+		if gameMap[nowX-1][nowY-1] != '.'{
+			fmt.Println("障碍物:", nowX, ",", nowY)
+			continue
+		}
+		if b, ok := book[nowX]; ok{
+			b[nowY] = 1
+			book[nowX] = b
+		}else{
+			b := make(map[int]int)
+			b[nowY] = 1
+			book[nowX] = b
+		}
 		newStep := step + 1
 		dfs(nowX, nowY, newStep)
 		book[nowX][nowY] = 0
