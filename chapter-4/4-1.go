@@ -29,8 +29,8 @@ type queue struct{
 	y int
 }
 
-var startX = 3
-var startY = 3
+var startX = 4
+var startY = 4
 
 func main(){
 	//已经走过的路
@@ -54,6 +54,7 @@ func main(){
 	//获取可以炸到多少个敌人
 	bestNum := getNum(startX-1, startY-1)
 	fmt.Println(bestNum)
+	return
 	bestX := startX
 	bestY := startY
 	//循环非空队列
@@ -116,6 +117,7 @@ func getNum(x, y int)int{
 	//计算左边可以消灭的敌人数量
 	m := x
 	n := y
+	fmt.Println(string(gameMap[m][n]))
 	for gameMap[m][n] != '#'{
 		if gameMap[m][n] == 'G'{
 			sum++
