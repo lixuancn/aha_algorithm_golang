@@ -17,7 +17,7 @@ var userInputGameMap = [9][3]int{
 	{5,6,4},
 }
 
-var inf = 2^32 - 1
+var inf = 2<<31 - 1
 
 var min int
 
