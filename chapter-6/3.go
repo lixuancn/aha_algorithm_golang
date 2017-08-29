@@ -19,7 +19,7 @@ var inf = 2<<31 - 1
 var u, v, w [5]int
 
 func main(){
-	for i:=0; i<cityCount; i++{
+	for i:=0; i<lineCount; i++{
 		u[i] = userInputGameMap[i][0]
 		v[i] = userInputGameMap[i][1]
 		w[i] = userInputGameMap[i][2]
