@@ -1,3 +1,5 @@
+//树的用法，并查集
+
 package main
 
 import "fmt"
