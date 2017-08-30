@@ -59,9 +59,7 @@ func deleteMin()int{
 func main(){
 	n = 14
 	h = [15]int{0, 99, 5, 36, 7, 22, 17, 46, 12, 2, 19, 25, 28, 1, 92}
-
 	create()
-
 	for i:=0; i<n; i++{
 		fmt.Println(deleteMin())
 	}
