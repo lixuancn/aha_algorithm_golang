@@ -91,10 +91,9 @@ func main(){
 			count++
 			sum = sum + edgeList[i].w
 		}
-		if i == cityCount -1{
+		if count == cityCount -1{
 			break
 		}
 	}
-	fmt.Println(edgeList)
 	fmt.Println(sum)
 }
