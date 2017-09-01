@@ -9,7 +9,7 @@ import (
 var pointCount = 6
 var lineCount = 9
 
-var userInputMap = [9][3]int{
+var userInputMap = [10][3]int{
 	{2,4,11},
 	{3,5,13},
 	{4,6,3},
