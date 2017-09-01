@@ -9,7 +9,7 @@ import (
 var pointCount = 6
 var lineCount = 9
 
-var userInputMap = [10][3]int{
+var userInputMap = [9][3]int{
 	{2,4,11},
 	{3,5,13},
 	{4,6,3},
@@ -21,47 +21,124 @@ var userInputMap = [10][3]int{
 	{1,3,2},
 }
 
+var book [7]int
+var dis [7]int
+//h是堆， pos是每个定点在堆中的位置
+var h, pos [7]int
+
+func swap(x, y int){
+	tmp := h[x]
+	h[x] = h[y]
+	h[y] = tmp
+
+	tmp = pos[h[x]]
+	pos[h[x]] = pos[h[y]]
+	pos[h[y]] = tmp
+}
+
+func siftdown(i int){
+	var flag bool
+	var t int
+	for i * 2 <= pointCount && flag == false{
+		if dis[h[i]] > dis[h[i*2]]{
+			t = i * 2
+		}else{
+			t = i
+		}
+		if i * 2 + 1 <= pointCount{
+			if dis[h[t]] > dis[h[i*2+1]]{
+				t = i * 2 + 1
+			}
+		}
+		if t != i{
+			swap(t, i)
+			i = t
+		}else{
+			flag = true
+		}
+	}
+}
+
+func siftup(i int){
+	if i == 1{
+		return
+	}
+	var flag bool
+	for i != 1 && flag == false{
+		if dis[h[i]] < dis[h[i/2]]{
+			swap(i, i/2)
+		}else{
+			flag = true
+		}
+		i = i / 2
+	}
+}
+
+func pop()int{
+	t := h[1]
+	pos[t] = 0
+	h[1] = h[pointCount]
+	pointCount--
+	siftdown(1)
+	return t
+}
+
 func main(){
-	var book [7]int
-	var dis [7]int
-	var gameMap [7][7]int
+	var u, v, w [19]int
+	var first [7]int
+	var next [19]int
 	inf := math.MaxInt64
 	var count, sum int
-	for i:=0; i<= pointCount; i++{
-		for j:=0; j<= pointCount; j++ {
-			if i == j{
-				gameMap[i][j] = inf
-			}else{
-				gameMap[i][j] = inf
-			}
-		}
+	for k, userInput := range userInputMap{
+		key := k + 1
+		u[key] = userInput[0]
+		v[key] = userInput[1]
+		w[key] = userInput[2]
+		u[key+9] = userInput[0]
+		v[key+9] = userInput[1]
+		w[key+9] = userInput[2]
 	}
-	for _, v := range userInputMap{
-		gameMap[v[0]][v[1]] = v[2]
-		gameMap[v[1]][v[0]] = v[2]
+	//邻接表
+	for i, _ := range first{
+		first[i] = -1
 	}
-	//1号定点入树
-	for i:=1; i<=pointCount; i++{
-		dis[i] = gameMap[1][i]
+	for i:=1; i<=2*lineCount; i++{
+		next[i] = first[u[i]]
+		first[u[i]] = i
 	}
+	//Prim算法
 	book[1] = 1
 	count++
-	j := 0
+	for i, _ := range dis{
+		dis[i] = inf
+	}
+	dis[1] = 0
+	k := first[1]
+	sum++
+	for k!=-1{
+		dis[v[k]] = w[k]
+		k = next[k]
+	}
+	for i, _ := range h{
+		h[i] = i
+		pos[i] = i
+	}
+	for i:=pointCount/2; i>=1; i--{
+		siftdown(i)
+	}
+	pop()
 	for count < pointCount{
-		min := inf
-		for i:=1; i<=pointCount; i++{
-			if book[i] == 0 && dis[i] < min{
-				min = dis[i]
-				j = i
-			}
-		}
+		j := pop()
 		book[j] = 1
 		count++
 		sum += dis[j]
-		for i, v := range dis{
-			if book[i] == 0 && v > gameMap[j][i]{
-				dis[i] = gameMap[j][i]
+		k := first[j]
+		for k != -1{
+			if book[v[k]] == 0 && dis[v[k]] > w[k]{
+				dis[v[k]] = w[k]
+				siftup(pos[v[k]])
 			}
+			k = next[k]
 		}
 	}
 	fmt.Println(sum)
